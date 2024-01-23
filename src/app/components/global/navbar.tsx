@@ -1,6 +1,8 @@
 import styles from './navbar.module.css'
 import Link from 'next/link'
 
+// TODO: Mobile navigation menu
+
 export default function Navbar() {
   return (
     <div className={styles.navigation}>

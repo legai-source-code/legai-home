@@ -6,6 +6,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.mainContainer}>
         <h1>Welcome to LEG AI</h1>
+        <p>Automate RFP Proposals</p>
       </div>
     </main>
   );
