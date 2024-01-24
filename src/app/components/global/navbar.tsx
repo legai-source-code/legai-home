@@ -8,22 +8,21 @@ export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
 
-  const toggleNavbar = (event: React.MouseEvent<HTMLDivElement, MouseEvent>)  => {
-    // setNavbarOpen(!navbarOpen)
-
-    // Check if X icon or one of the navLinks are clicked
-    const isXIcon = event.target === navRef.current?.querySelector(`.${styles.hamburgerOpen}`);
-    const isNavLink = event.target instanceof Element && event.target.matches(`.${styles.navLinks}`);
-
-    if (navbarOpen && (isXIcon || isNavLink)) {
-      setNavbarOpen(false);
-    } else {
-      setNavbarOpen(true)
-    }
+  const toggleNavbar = ()  => {
+    setNavbarOpen(!navbarOpen)
   }
 
-  const closeNavbarOnClick = () => {
-    setNavbarOpen(false);
+  const closeNavbarOnClick = (event: MouseEvent) => {
+    const isXIcon = event.target === navRef.current?.querySelector(`.${styles.hamburgerOpen}`);
+    const isNavLinkContainer = navRef.current?.contains(event.target as Node);
+
+    console.log('navRef', navRef.current)
+
+    if (navbarOpen && (isXIcon || isNavLinkContainer)) {
+      console.log('xIcon?', isXIcon)
+      console.log('clicked a nav link!')
+      setNavbarOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function Navbar() {
       // Remove event listener on component unmount
       navRef?.current?.removeEventListener('click', closeNavbarOnClick);
     };
-  }, [])
+  }, [navbarOpen])
 
   return (
     <div className={styles.navigation} ref={navRef}>
