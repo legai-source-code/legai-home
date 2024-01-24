@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import Navbar from "./components/global/navbar";
 import "./globals.css";
 import '@mantine/core/styles.css';
-import { HeaderSimple } from "./components/global/mantine/HeaderSimple";
+import { HeaderMegaMenu } from "./components/global/mantine/HeaderMegaMenu";
+import { FooterLinks } from "./components/global/mantine/FooterLinks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +29,11 @@ export default function RootLayout({
         {/* <Navbar /> */}
 
         <MantineProvider>
-          <HeaderSimple />
+          <HeaderMegaMenu />
           {children}
+          <div className="footer-container">
+          <FooterLinks />
+          </div>
         </MantineProvider>
       </body>
     </html>
