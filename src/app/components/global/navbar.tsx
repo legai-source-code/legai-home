@@ -1,19 +1,44 @@
 'use client';
-import { useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from './navbar.module.css'
 import Link from 'next/link'
 
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const navRef = useRef(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
 
-  const toggleNavbar = ()  => {
-    setNavbarOpen(!navbarOpen)
+  const toggleNavbar = (event: React.MouseEvent<HTMLDivElement, MouseEvent>)  => {
+    // setNavbarOpen(!navbarOpen)
+
+    // Check if X icon or one of the navLinks are clicked
+    const isXIcon = event.target === navRef.current?.querySelector(`.${styles.hamburgerOpen}`);
+    const isNavLink = event.target instanceof Element && event.target.matches(`.${styles.navLinks}`);
+
+    if (navbarOpen && (isXIcon || isNavLink)) {
+      setNavbarOpen(false);
+    } else {
+      setNavbarOpen(true)
+    }
   }
 
+  const closeNavbarOnClick = () => {
+    setNavbarOpen(false);
+  };
+
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      navRef?.current?.addEventListener('click', closeNavbarOnClick)
+    }
+
+    return () => {
+      // Remove event listener on component unmount
+      navRef?.current?.removeEventListener('click', closeNavbarOnClick);
+    };
+  }, [])
+
   return (
-    <div className={styles.navigation}>
+    <div className={styles.navigation} ref={navRef}>
       <div className={styles.logoContainer}>
         {/* TODO: Logo here */}
         <Link href="/">

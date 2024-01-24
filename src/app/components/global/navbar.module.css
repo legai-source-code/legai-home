@@ -141,6 +141,10 @@
     margin: 0 0.42vw;
     transition: all 200ms ease-in;
     position: relative;
+
+    @media (max-width: 768px) {
+        padding-top: 4px;
+    }
 }
 
 
